@@ -27,21 +27,19 @@ public class KickListener {
         }
 
         boolean cont = true;
+
         for (String regexp : ConfigurationParser.getConfiguration().getBlacklistedMessages()) {
             if (reason.matches(regexp)) {
                 cont = false;
+                break;
             }
         }
-
-        logger.info(String.valueOf(cont));
 
         for (String server : ConfigurationParser.getConfiguration().getBlacklistedServers()) {
             if (server.equals(event.getServer().getServerInfo().getName())) {
                 cont = false;
             }
         }
-
-        logger.info(String.valueOf(cont));
 
         if (!cont) {
             return;
