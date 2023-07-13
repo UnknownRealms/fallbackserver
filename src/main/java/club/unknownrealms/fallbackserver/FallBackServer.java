@@ -17,7 +17,7 @@ import java.nio.file.Path;
 @Plugin(
         id = "fallbackserver",
         name = "FallBackServer",
-        version = BuildConstants.VERSION
+        version = "1.0.0"
 )
 public class FallBackServer {
     private static FallBackServer instance;
