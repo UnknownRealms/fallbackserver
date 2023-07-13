@@ -1,0 +1,14 @@
+# Message to send to a user when they are kicked from the server and fallback conditions are met.
+# Variables:
+#   %server% - The name of the server the user was kicked from.
+#   %fallback% - The name of the server the user was sent to.
+#   %reason% - The reason the user was kicked from the server.
+
+kickMessage: "&cAn error occurred in your connection to %server% and were sent to %fallback%.\n&f%reason%"
+
+# Message to send to a user when they are kicked from the server, fallback conditions are met, and they were attempting to join the server.
+# Variables:
+#   %server% - The name of the server the user was kicked from.
+#   %fallback% - The name of the server the user was sent to.
+#   %reason% - The reason the user was kicked from the server.
+kickMessageJoin: "&cAn error occurred while you attempted to join %server% and were sent to %fallback%.\n&f%reason%"
