@@ -4,15 +4,9 @@ fallbackServers:
   - hub
   - limbo
 
-# Will treat blacklisted-messages as a whitelist
-inverseBlacklistedMessages: false
-
 # Will not attempt to send the player to a fallback server if their kick reason matches any of these regexes.
 blacklistedMessages:
   - ".*banned.*"
-
-# Will treat blacklisted-servers as a whitelist.
-inverseBlacklistedServers: false
 
 # Will not attempt to send the player to a fallback server if they were kicked from a server in this list.
 blacklistedServers:

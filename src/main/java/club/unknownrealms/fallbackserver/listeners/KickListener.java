@@ -16,24 +16,20 @@ public class KickListener {
 
     @Subscribe(order = PostOrder.FIRST)
     public void onKick(KickedFromServerEvent event) {
-        if (!(event.getResult() instanceof KickedFromServerEvent.DisconnectPlayer)) {
-            logger.info("asd");
-            return;
-        }
-
         String reason = "No reason provided.";
         if (event.getServerKickReason().isPresent()) {
             JsonObject json = new Gson().fromJson(GsonComponentSerializer.gson().serialize(event.getServerKickReason().get()), JsonObject.class);
-            logger.info(json.toString());
             if (json.has("text")) {
                 reason = json.get("text").getAsString();
+            } else if (json.has("translate")) {
+                reason = json.get("translate").getAsString();
             }
         }
 
         boolean cont = true;
         for (String regexp : ConfigurationParser.getConfiguration().getBlacklistedMessages()) {
             if (reason.matches(regexp)) {
-                cont = ConfigurationParser.getConfiguration().isInverseBlacklistedMessages();
+                cont = false;
             }
         }
 
@@ -41,7 +37,7 @@ public class KickListener {
 
         for (String server : ConfigurationParser.getConfiguration().getBlacklistedServers()) {
             if (server.equals(event.getServer().getServerInfo().getName())) {
-                cont = false
+                cont = false;
             }
         }
 

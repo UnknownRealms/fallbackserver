@@ -36,7 +36,7 @@ public class ConfigurationParser {
         configuration = new Configuration(yaml.load(reader));
     }
 
-    public static MessagesConfiguration parseMessages() throws Exception {
+    public static void parseMessages() throws Exception {
         File messagesFile = FallBackServer.getInstance().getMessagesFile();
         if (!messagesFile.exists()) {
             createFileFromResource(messagesFile, "messages.yml");
@@ -45,8 +45,6 @@ public class ConfigurationParser {
 
         Yaml yaml = new Yaml();
         messagesConfiguration = new MessagesConfiguration(yaml.load(reader));
-
-        return messagesConfiguration;
     }
 
     public static Configuration getConfiguration() {
@@ -58,13 +56,11 @@ public class ConfigurationParser {
     }
 
     public static class Configuration {
-        private ArrayList<String> fallbackServers;
+        private final ArrayList<String> fallbackServers;
 
-        private boolean inverseBlacklistedMessages;
-        private ArrayList<String> blacklistedMessages;
+        private final ArrayList<String> blacklistedMessages;
 
-        private boolean inverseBlacklistedServers;
-        private ArrayList<String> blacklistedServers;
+        private final ArrayList<String> blacklistedServers;
 
         public Configuration(Map<String, Object> yamlMap) {
             if (yamlMap.get("fallbackServers") instanceof List) {
@@ -73,22 +69,10 @@ public class ConfigurationParser {
                 throw new IllegalArgumentException("fallbackServers must be a list");
             }
 
-            if (yamlMap.get("inverseBlacklistedMessages") instanceof Boolean) {
-                inverseBlacklistedMessages = (boolean) yamlMap.get("inverseBlacklistedMessages");
-            } else {
-                throw new IllegalArgumentException("inverseBlacklistedMessages must be a boolean");
-            }
-
             if (yamlMap.get("blacklistedMessages") instanceof List) {
                 blacklistedMessages = (ArrayList<String>) yamlMap.get("blacklistedMessages");
             } else {
                 throw new IllegalArgumentException("blacklistedMessages must be a list");
-            }
-
-            if (yamlMap.get("inverseBlacklistedServers") instanceof Boolean) {
-                inverseBlacklistedServers = (boolean) yamlMap.get("inverseBlacklistedServers");
-            } else {
-                throw new IllegalArgumentException("inverseBlacklistedServers must be a boolean");
             }
 
             if (yamlMap.get("blacklistedServers") instanceof List) {
@@ -102,16 +86,8 @@ public class ConfigurationParser {
             return fallbackServers;
         }
 
-        public boolean isInverseBlacklistedMessages() {
-            return inverseBlacklistedMessages;
-        }
-
         public ArrayList<String> getBlacklistedMessages() {
             return blacklistedMessages;
-        }
-
-        public boolean isInverseBlacklistedServers() {
-            return inverseBlacklistedServers;
         }
 
         public ArrayList<String> getBlacklistedServers() {
@@ -120,8 +96,8 @@ public class ConfigurationParser {
     }
 
     public static class MessagesConfiguration {
-        private String kickMessage;
-        private String kickMessageJoin;
+        private final String kickMessage;
+        private final String kickMessageJoin;
 
         public MessagesConfiguration(Map<String, Object> yamlMap) {
             if (yamlMap.get("kickMessage") instanceof String) {
